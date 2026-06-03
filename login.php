@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
     <div class="container-fluid min-vh-100 d-flex p-0">
         <div class="row g-0 w-100">
             <div class="col-lg-7 d-none d-lg-flex align-items-center justify-content-center bg-primary position-relative overflow-hidden">

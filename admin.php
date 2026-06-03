@@ -24,6 +24,7 @@ if (!isset($_SESSION['admin'])) {
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body class="bg-light">
+        <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
         <div class="container d-flex align-items-center justify-content-center min-vh-100">
             <div class="card shadow-lg border-0 p-4" style="width:100%;max-width:420px;">
                 <div class="text-center mb-4">
@@ -83,6 +84,7 @@ $apps       = getAllApplications($filter, $sort, $order, $limit, $offset);
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="admin.php"><i class="bi bi-shield-lock-fill"></i> Админ-панель</a>

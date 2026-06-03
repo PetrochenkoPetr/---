@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-light">
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
     <div class="container d-flex align-items-center justify-content-center min-vh-100">
         <div class="card shadow-lg border-0 p-4" style="width:100%;max-width:480px;">
             <div class="text-center mb-4">

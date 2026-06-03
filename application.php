@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="profile.php"><i class="bi bi-mortarboard-fill"></i> Учусь.РФ</a>
