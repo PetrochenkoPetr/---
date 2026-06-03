@@ -124,6 +124,51 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /* ========== PASSWORD STRENGTH ========== */
+    const pwdInput = document.getElementById('regPassword');
+    const strengthContainer = document.getElementById('passwordStrength');
+    const strengthFill = document.getElementById('strengthFill');
+    const strengthText = document.getElementById('strengthText');
+
+    if (pwdInput && strengthContainer && strengthFill && strengthText) {
+        pwdInput.addEventListener('input', function () {
+            const val = this.value;
+            if (val.length === 0) {
+                strengthContainer.classList.remove('visible');
+                return;
+            }
+            strengthContainer.classList.add('visible');
+
+            let score = 0;
+            if (val.length >= 8) score += 25;
+            if (val.length >= 12) score += 15;
+            if (/[a-z]/.test(val)) score += 15;
+            if (/[A-Z]/.test(val)) score += 15;
+            if (/[0-9]/.test(val)) score += 15;
+            if (/[^a-zA-Z0-9]/.test(val)) score += 15;
+
+            strengthFill.style.width = Math.min(100, score) + '%';
+
+            if (score < 30) {
+                strengthFill.style.background = '#dc3545';
+                strengthText.textContent = 'Слабый';
+                strengthText.style.color = '#dc3545';
+            } else if (score < 60) {
+                strengthFill.style.background = '#ffc107';
+                strengthText.textContent = 'Средний';
+                strengthText.style.color = '#ffc107';
+            } else if (score < 80) {
+                strengthFill.style.background = '#0d6efd';
+                strengthText.textContent = 'Хороший';
+                strengthText.style.color = '#0d6efd';
+            } else {
+                strengthFill.style.background = '#198754';
+                strengthText.textContent = 'Надёжный';
+                strengthText.style.color = '#198754';
+            }
+        });
+    }
+
     /* ========== BUTTON LOADING STATE ========== */
     document.querySelectorAll('form').forEach(function (form) {
         form.addEventListener('submit', function () {

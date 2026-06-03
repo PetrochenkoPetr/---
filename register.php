@@ -76,7 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="form-label">Пароль <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                        <input type="password" name="password" class="form-control<?= isset($errors['password']) ? ' is-invalid' : '' ?>" placeholder="Минимум 8 символов">
+                        <input type="password" name="password" id="regPassword" class="form-control<?= isset($errors['password']) ? ' is-invalid' : '' ?>" placeholder="Минимум 8 символов">
+                    </div>
+                    <div class="password-strength mt-1" id="passwordStrength">
+                        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                        <small class="strength-text" id="strengthText"></small>
                     </div>
                     <?php if (isset($errors['password'])): ?><div class="invalid-feedback d-block"><?= $errors['password'] ?></div><?php endif; ?>
                 </div>
