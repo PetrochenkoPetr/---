@@ -65,34 +65,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="post" novalidate>
                 <div class="mb-3">
                     <label class="form-label">Логин <span class="text-danger">*</span></label>
-                    <input type="text" name="login" class="form-control<?= isset($errors['login']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['login']??'') ?>" placeholder="Латинские буквы и цифры, мин. 6">
-                    <?php if (isset($errors['login'])): ?><div class="invalid-feedback"><?= $errors['login'] ?></div><?php endif; ?>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                        <input type="text" name="login" class="form-control<?= isset($errors['login']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['login']??'') ?>" placeholder="Латинские буквы и цифры, мин. 6">
+                    </div>
+                    <?php if (isset($errors['login'])): ?><div class="invalid-feedback d-block"><?= $errors['login'] ?></div><?php endif; ?>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Пароль <span class="text-danger">*</span></label>
-                    <input type="password" name="password" class="form-control<?= isset($errors['password']) ? ' is-invalid' : '' ?>" placeholder="Минимум 8 символов">
-                    <?php if (isset($errors['password'])): ?><div class="invalid-feedback"><?= $errors['password'] ?></div><?php endif; ?>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" name="password" class="form-control<?= isset($errors['password']) ? ' is-invalid' : '' ?>" placeholder="Минимум 8 символов">
+                    </div>
+                    <?php if (isset($errors['password'])): ?><div class="invalid-feedback d-block"><?= $errors['password'] ?></div><?php endif; ?>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ФИО <span class="text-danger">*</span></label>
-                    <input type="text" name="full_name" class="form-control<?= isset($errors['full_name']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['full_name']??'') ?>">
-                    <?php if (isset($errors['full_name'])): ?><div class="invalid-feedback"><?= $errors['full_name'] ?></div><?php endif; ?>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" name="full_name" class="form-control<?= isset($errors['full_name']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['full_name']??'') ?>">
+                    </div>
+                    <?php if (isset($errors['full_name'])): ?><div class="invalid-feedback d-block"><?= $errors['full_name'] ?></div><?php endif; ?>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Телефон <span class="text-danger">*</span></label>
-                    <input type="tel" name="phone" class="form-control<?= isset($errors['phone']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['phone']??'') ?>">
-                    <?php if (isset($errors['phone'])): ?><div class="invalid-feedback"><?= $errors['phone'] ?></div><?php endif; ?>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        <input type="tel" name="phone" class="form-control<?= isset($errors['phone']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['phone']??'') ?>">
+                    </div>
+                    <?php if (isset($errors['phone'])): ?><div class="invalid-feedback d-block"><?= $errors['phone'] ?></div><?php endif; ?>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">E-mail <span class="text-danger">*</span></label>
-                    <input type="email" name="email" class="form-control<?= isset($errors['email']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['email']??'') ?>">
-                    <?php if (isset($errors['email'])): ?><div class="invalid-feedback"><?= $errors['email'] ?></div><?php endif; ?>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" name="email" class="form-control<?= isset($errors['email']) ? ' is-invalid' : '' ?>" value="<?= htmlspecialchars($old['email']??'') ?>">
+                    </div>
+                    <?php if (isset($errors['email'])): ?><div class="invalid-feedback d-block"><?= $errors['email'] ?></div><?php endif; ?>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 py-2">Зарегистрироваться</button>
+                <button type="submit" class="btn btn-primary w-100 py-2"><i class="bi bi-person-plus"></i> Зарегистрироваться</button>
             </form>
 
             <div class="text-center mt-3">
                 <a href="login.php">Уже зарегистрированы? Войти</a>
+            </div>
+            <div class="text-center mt-1">
+                <a href="index.php" class="text-muted small">На главную</a>
             </div>
         </div>
     </div>
