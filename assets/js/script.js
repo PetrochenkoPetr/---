@@ -4,6 +4,12 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    /* ========== PAGE LOADER ========== */
+    const loader = document.getElementById('pageLoader');
+    if (loader) {
+        setTimeout(function () { loader.classList.add('hidden'); }, 300);
+    }
+
     /* ========== SLIDER ========== */
     const wrapper = document.getElementById('sliderWrapper');
     if (wrapper) {
@@ -52,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (prevBtn) prevBtn.addEventListener('click', function () { prevSlide(); startAuto(); });
         if (nextBtn) nextBtn.addEventListener('click', function () { nextSlide(); startAuto(); });
 
-        /* Pause on hover */
         const container = wrapper.closest('.slider-container');
         if (container) {
             container.addEventListener('mouseenter', stopAuto);
@@ -75,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function validateField(el) {
-        const feedback = el.parentElement.querySelector('.invalid-feedback');
+        const parent = el.closest('.mb-3') || el.parentElement;
+        let feedback = parent.querySelector('.invalid-feedback');
         if (!feedback) return;
 
         let error = '';
@@ -118,22 +124,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* ========== MICRO-ANIMATIONS ========== */
-    document.querySelectorAll('.btn, .card, .nav-link, .page-link').forEach(function (el) {
-        el.addEventListener('mouseenter', function () {
-            this.style.transition = 'all 0.2s ease';
+    /* ========== BUTTON LOADING STATE ========== */
+    document.querySelectorAll('form').forEach(function (form) {
+        form.addEventListener('submit', function () {
+            const btn = this.querySelector('button[type="submit"]');
+            if (btn) btn.classList.add('btn-loading');
         });
     });
 
-    /* Smooth alert dismiss animation */
+    /* ========== SMOOTH ALERT DISMISS ========== */
     document.querySelectorAll('.alert').forEach(function (alert) {
         setTimeout(function () {
             if (alert.classList.contains('alert-dismissible')) {
-                alert.style.transition = 'opacity 0.5s ease';
+                alert.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                 alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-10px)';
                 setTimeout(function () { alert.remove(); }, 500);
             }
         }, 5000);
+    });
+
+    /* ========== COUNTER ANIMATION ========== */
+    document.querySelectorAll('.animate-count').forEach(function (el) {
+        const target = parseInt(el.dataset.count) || 0;
+        let current = 0;
+        const step = Math.ceil(target / 30);
+        const timer = setInterval(function () {
+            current += step;
+            if (current >= target) { current = target; clearInterval(timer); }
+            el.textContent = current;
+        }, 40);
+    });
+
+    /* ========== TOOLTIP INIT ========== */
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (el) {
+        return new bootstrap.Tooltip(el);
     });
 
 });
