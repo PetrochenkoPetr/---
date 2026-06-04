@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text'], $_POST
                                                 <?= htmlspecialchars($app['status']) ?>
                                             </span>
                                         </div>
-                                        <small class="text-muted d-block mt-2">Создана: <?= date('d.m.Y H:i', strtotime($app['created_at'])) ?></small>
+                                        <small class="text-muted d-block mt-2">Создана: <?= date('d.m.Y', strtotime($app['created_at'])) ?></small>
 
                                         <?php if (in_array($app['status'], ['Идет обучение', 'Обучение завершено']) && !in_array($app['id'], $reviewedAppIds)): ?>
                                             <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#reviewModal<?= $app['id'] ?>">
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text'], $_POST
                                     <div class="card-body">
                                         <h6><?= htmlspecialchars($r['course_type']) ?></h6>
                                         <p class="mb-1"><?= nl2br(htmlspecialchars($r['text'])) ?></p>
-                                        <small class="text-muted"><?= date('d.m.Y H:i', strtotime($r['created_at'])) ?></small>
+                                        <small class="text-muted"><?= date('d.m.Y', strtotime($r['created_at'])) ?></small>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
