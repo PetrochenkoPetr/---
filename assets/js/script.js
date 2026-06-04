@@ -124,6 +124,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /* ========== DATE MASK (ДД.ММ.ГГГГ) ========== */
+    const dateInput = document.getElementById('startDate');
+    if (dateInput) {
+        dateInput.addEventListener('input', function (e) {
+            let val = this.value.replace(/\D/g, '');
+            if (val.length > 2) val = val.substring(0, 2) + '.' + val.substring(2);
+            if (val.length > 5) val = val.substring(0, 5) + '.' + val.substring(5, 9);
+            this.value = val;
+        });
+        dateInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Backspace' && (this.value.endsWith('.') || this.value.length === 3 || this.value.length === 6)) {
+                this.value = this.value.slice(0, -1);
+                e.preventDefault();
+            }
+        });
+    }
+
     /* ========== PASSWORD STRENGTH ========== */
     const pwdInput = document.getElementById('regPassword');
     const strengthContainer = document.getElementById('passwordStrength');

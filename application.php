@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/functions.php';
 requireAuth();
 
 $courseTypes = [
@@ -91,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Предпочтительная дата начала</label>
-                            <input type="text" name="start_date" class="form-control" placeholder="ДД.ММ.ГГГГ" required>
+                            <input type="text" name="start_date" id="startDate" class="form-control" placeholder="ДД.ММ.ГГГГ" maxlength="10" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Способ оплаты</label>
