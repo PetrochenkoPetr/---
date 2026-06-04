@@ -105,26 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text'], $_POST
                                             <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#reviewModal<?= $app['id'] ?>">
                                                 <i class="bi bi-star"></i> Оставить отзыв
                                             </button>
-
-                                            <div class="modal fade" id="reviewModal<?= $app['id'] ?>" tabindex="-1">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <form method="post">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Отзыв о курсе</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <input type="hidden" name="app_id" value="<?= $app['id'] ?>">
-                                                                <textarea name="review_text" class="form-control" rows="4" placeholder="Напишите ваш отзыв..." required></textarea>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="submit" class="btn btn-primary">Отправить</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -151,6 +131,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text'], $_POST
             </div>
         </div>
     </div>
+
+    <?php foreach ($apps as $app): ?>
+        <?php if (in_array($app['status'], ['Идет обучение', 'Обучение завершено']) && !in_array($app['id'], $reviewedAppIds)): ?>
+            <div class="modal fade" id="reviewModal<?= $app['id'] ?>" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Отзыв о курсе</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="app_id" value="<?= $app['id'] ?>">
+                                <p class="text-muted">Курс: <strong><?= htmlspecialchars($app['course_type']) ?></strong></p>
+                                <textarea name="review_text" class="form-control" rows="4" placeholder="Напишите ваш отзыв..." required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.js"></script>
