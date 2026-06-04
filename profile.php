@@ -60,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text'], $_POST
                         <h5><i class="bi bi-images"></i> Галерея</h5>
                         <div class="slider-container">
                             <div class="slider-wrapper" id="sliderWrapper">
-                                <div class="slider-slide"><img src="assets/images/slide1.svg" alt="Курс 1"></div>
-                                <div class="slider-slide"><img src="assets/images/slide2.svg" alt="Курс 2"></div>
-                                <div class="slider-slide"><img src="assets/images/slide3.svg" alt="Курс 3"></div>
-                                <div class="slider-slide"><img src="assets/images/slide4.svg" alt="Курс 4"></div>
+                                <div class="slider-slide"><img src="assets/images/course_1.jpg" alt="Курс 1"></div>
+                                <div class="slider-slide"><img src="assets/images/88-gHQq11R0.jpg" alt="Курс 2"></div>
+                                <div class="slider-slide"><img src="assets/images/6410690722451365045.jpg" alt="Курс 3"></div>
+                                <div class="slider-slide"><img src="assets/images/slide18-l-1.jpg" alt="Курс 4"></div>
                             </div>
                             <button class="slider-btn slider-prev" id="sliderPrev"><i class="bi bi-chevron-left"></i></button>
                             <button class="slider-btn slider-next" id="sliderNext"><i class="bi bi-chevron-right"></i></button>

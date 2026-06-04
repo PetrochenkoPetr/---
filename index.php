@@ -35,10 +35,10 @@ if (isAuthenticated()) {
                 <div class="card shadow border-0 overflow-hidden">
                     <div class="slider-container" style="border-radius:0;">
                         <div class="slider-wrapper" id="sliderWrapper">
-                            <div class="slider-slide"><img src="assets/images/slide1.svg" alt="Курс 1"></div>
-                            <div class="slider-slide"><img src="assets/images/slide2.svg" alt="Курс 2"></div>
-                            <div class="slider-slide"><img src="assets/images/slide3.svg" alt="Курс 3"></div>
-                            <div class="slider-slide"><img src="assets/images/slide4.svg" alt="Курс 4"></div>
+                            <div class="slider-slide"><img src="assets/images/course_1.jpg" alt="Курс 1"></div>
+                            <div class="slider-slide"><img src="assets/images/88-gHQq11R0.jpg" alt="Курс 2"></div>
+                            <div class="slider-slide"><img src="assets/images/6410690722451365045.jpg" alt="Курс 3"></div>
+                            <div class="slider-slide"><img src="assets/images/slide18-l-1.jpg" alt="Курс 4"></div>
                         </div>
                         <button class="slider-btn slider-prev" id="sliderPrev"><i class="bi bi-chevron-left"></i></button>
                         <button class="slider-btn slider-next" id="sliderNext"><i class="bi bi-chevron-right"></i></button>
