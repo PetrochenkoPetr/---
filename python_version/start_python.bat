@@ -10,10 +10,24 @@ echo.
 REM Проверяем Python
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo [ОШИБКА] Python не установлен!
-    echo Скачай с https://www.python.org/downloads/
-    pause
-    exit /b
+    echo [!] Python не найден. Скачиваю из интернета...
+    echo.
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://www.python.org/ftp/python/3.12.7/python-3.12.7-amd64.exe' -OutFile '%TEMP%\python-installer.exe'"
+    
+    if exist "%TEMP%\python-installer.exe" (
+        echo Устанавливаю Python (без участия пользователя)...
+        "%TEMP%\python-installer.exe" /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
+        del "%TEMP%\python-installer.exe" 2>nul
+        echo.
+        echo Python установлен. Перезапустите этот скрипт.
+        pause
+        exit /b
+    ) else (
+        echo [ОШИБКА] Не удалось скачать Python
+        echo Скачай вручную: https://www.python.org/downloads/
+        pause
+        exit /b
+    )
 )
 
 echo [OK] Python найден
