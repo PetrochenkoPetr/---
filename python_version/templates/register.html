@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Регистрация — Учусь.РФ{% endblock %}
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow-lg border-0 p-4" style="width:100%;max-width:480px;">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary"><i class="bi bi-mortarboard-fill"></i> Учусь.РФ</h2>
+            <p class="text-muted">Регистрация нового пользователя</p>
+        </div>
+        {% if errors %}
+        <div class="alert alert-danger">
+            <ul class="mb-0">{% for e in errors.values() %}<li>{{ e }}</li>{% endfor %}</ul>
+        </div>
+        {% endif %}
+        <form method="post" novalidate>
+            <div class="mb-3">
+                <label class="form-label">Логин <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                    <input type="text" name="login" class="form-control{% if 'login' in errors %} is-invalid{% endif %}" value="{{ old.get('login', '') }}" placeholder="Латинские буквы и цифры, мин. 6">
+                </div>
+                {% if 'login' in errors %}<div class="invalid-feedback d-block">{{ errors['login'] }}</div>{% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Пароль <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="password" id="regPassword" class="form-control{% if 'password' in errors %} is-invalid{% endif %}" placeholder="Минимум 8 символов">
+                </div>
+                <div class="password-strength" id="passwordStrength">
+                    <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                    <small class="strength-text" id="strengthText"></small>
+                </div>
+                {% if 'password' in errors %}<div class="invalid-feedback d-block">{{ errors['password'] }}</div>{% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ФИО <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="full_name" class="form-control{% if 'full_name' in errors %} is-invalid{% endif %}" value="{{ old.get('full_name', '') }}">
+                </div>
+                {% if 'full_name' in errors %}<div class="invalid-feedback d-block">{{ errors['full_name'] }}</div>{% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Телефон <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                    <input type="tel" name="phone" class="form-control{% if 'phone' in errors %} is-invalid{% endif %}" value="{{ old.get('phone', '') }}">
+                </div>
+                {% if 'phone' in errors %}<div class="invalid-feedback d-block">{{ errors['phone'] }}</div>{% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">E-mail <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="email" class="form-control{% if 'email' in errors %} is-invalid{% endif %}" value="{{ old.get('email', '') }}">
+                </div>
+                {% if 'email' in errors %}<div class="invalid-feedback d-block">{{ errors['email'] }}</div>{% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2"><i class="bi bi-person-plus"></i> Зарегистрироваться</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('login') }}">Уже зарегистрированы? Войти</a>
+        </div>
+        <div class="text-center mt-1">
+            <a href="{{ url_for('index') }}" class="text-muted small">На главную</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель — Учусь.РФ{% endblock %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('admin_panel') }}"><i class="bi bi-shield-lock-fill"></i> Админ-панель</a>
+        <div class="d-flex align-items-center">
+            <span class="text-light me-3"><i class="bi bi-person"></i> Admin</span>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Выход</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <h4 class="fw-bold mb-3"><i class="bi bi-list-check"></i> Все заявки</h4>
+    <div class="row mb-3 g-2">
+        <div class="col-auto">
+            <select class="form-select" id="filterSelect" onchange="filterChange()">
+                <option value="">Все статусы</option>
+                <option value="Новая" {{ 'selected' if status_filter == 'Новая' }}>Новая</option>
+                <option value="Идет обучение" {{ 'selected' if status_filter == 'Идет обучение' }}>Идет обучение</option>
+                <option value="Обучение завершено" {{ 'selected' if status_filter == 'Обучение завершено' }}>Обучение завершено</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="sortSelect" onchange="filterChange()">
+                <option value="created_at" {{ 'selected' if sort_by == 'created_at' }}>По дате создания</option>
+                <option value="start_date" {{ 'selected' if sort_by == 'start_date' }}>По дате начала</option>
+                <option value="status" {{ 'selected' if sort_by == 'status' }}>По статусу</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="orderSelect" onchange="filterChange()">
+                <option value="DESC" {{ 'selected' if sort_order == 'DESC' }}>По убыванию</option>
+                <option value="ASC" {{ 'selected' if sort_order == 'ASC' }}>По возрастанию</option>
+            </select>
+        </div>
+    </div>
+    {% if not apps %}
+    <div class="alert alert-info">Заявок нет.</div>
+    {% else %}
+    {% for app in apps %}
+    <div class="card shadow-sm border-0 mb-3 admin-app-card">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <h6 class="fw-bold mb-1">{{ app['full_name'] }}</h6>
+                    <small class="text-muted"><i class="bi bi-person-badge"></i> {{ app['login'] }}</small><br>
+                    <small class="text-muted"><i class="bi bi-envelope"></i> {{ app['email'] }}</small><br>
+                    <small class="text-muted"><i class="bi bi-telephone"></i> {{ app['phone'] }}</small>
+                </div>
+                <div class="col-md-3">
+                    <strong>{{ app['course_type'] }}</strong><br>
+                    <small class="text-muted"><i class="bi bi-calendar"></i> {{ app['start_date'][:10] }}</small><br>
+                    <small class="text-muted"><i class="bi bi-wallet2"></i> {{ app['payment_method'] }}</small>
+                </div>
+                <div class="col-md-2">
+                    <span class="badge bg-{{ 'warning' if app['status'] == 'Новая' else ('info' if app['status'] == 'Идет обучение' else 'success') }} fs-6">
+                        {{ app['status'] }}
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <form method="post" class="row g-1">
+                        <input type="hidden" name="app_id" value="{{ app['id'] }}">
+                        <div class="col-8">
+                            <select name="status" class="form-select form-select-sm">
+                                <option value="Новая" {{ 'selected' if app['status'] == 'Новая' }}>Новая</option>
+                                <option value="Идет обучение" {{ 'selected' if app['status'] == 'Идет обучение' }}>Идет обучение</option>
+                                <option value="Обучение завершено" {{ 'selected' if app['status'] == 'Обучение завершено' }}>Обучение завершено</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" name="change_status" class="btn btn-dark btn-sm w-100">OK</button>
+                        </div>
+                    </form>
+                    <small class="text-muted">{{ app['created_at'][:10] }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% if total_pages > 1 %}
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% for i in range(1, total_pages + 1) %}
+            <li class="page-item {{ 'active' if i == page }}">
+                <a class="page-link" href="{{ url_for('admin_panel', page=i, filter=status_filter, sort=sort_by, order=sort_order) }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+    {% endif %}
+</div>
+<script>
+function filterChange() {
+    var f = document.getElementById('filterSelect').value;
+    var s = document.getElementById('sortSelect').value;
+    var o = document.getElementById('orderSelect').value;
+    window.location.href = '{{ url_for("admin_panel") }}?filter=' + encodeURIComponent(f) + '&sort=' + s + '&order=' + o;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель — Учусь.РФ{% endblock %}
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+    <div class="card shadow-lg border-0 p-4" style="width:100%;max-width:420px;">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold"><i class="bi bi-shield-lock-fill"></i> Администратор</h3>
+        </div>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Логин</label>
+                <input type="text" name="login" class="form-control" value="Admin26" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Пароль</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-dark w-100 py-2">Войти в панель</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

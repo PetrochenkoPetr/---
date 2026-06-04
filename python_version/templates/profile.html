@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет — Учусь.РФ{% endblock %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('profile') }}"><i class="bi bi-mortarboard-fill"></i> Учусь.РФ</a>
+        <div class="d-flex">
+            <a href="{{ url_for('application_form') }}" class="btn btn-outline-light btn-sm me-2">Новая заявка</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Выход</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <i class="bi bi-person-circle display-1 text-primary"></i>
+                    <h5 class="mt-2">{{ user['full_name'] }}</h5>
+                    <p class="text-muted mb-1"><i class="bi bi-envelope"></i> {{ user['email'] }}</p>
+                    <p class="text-muted mb-1"><i class="bi bi-telephone"></i> {{ user['phone'] }}</p>
+                    <p class="text-muted mb-0"><i class="bi bi-person-badge"></i> Логин: {{ user['login'] }}</p>
+                </div>
+            </div>
+            <div class="card shadow-sm border-0 mt-3">
+                <div class="card-body">
+                    <h5><i class="bi bi-images"></i> Галерея</h5>
+                    <div class="slider-container">
+                        <div class="slider-wrapper" id="sliderWrapper">
+                            <div class="slider-slide"><img src="{{ url_for('static', filename='images/course_1.jpg') }}" alt="Курс 1"></div>
+                            <div class="slider-slide"><img src="{{ url_for('static', filename='images/88-gHQq11R0.jpg') }}" alt="Курс 2"></div>
+                            <div class="slider-slide"><img src="{{ url_for('static', filename='images/6410690722451365045.jpg') }}" alt="Курс 3"></div>
+                            <div class="slider-slide"><img src="{{ url_for('static', filename='images/slide18-l-1.jpg') }}" alt="Курс 4"></div>
+                        </div>
+                        <button class="slider-btn slider-prev" id="sliderPrev"><i class="bi bi-chevron-left"></i></button>
+                        <button class="slider-btn slider-next" id="sliderNext"><i class="bi bi-chevron-right"></i></button>
+                        <div class="slider-dots" id="sliderDots"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <ul class="nav nav-tabs mb-3" id="profileTabs">
+                <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabApps">Мои заявки</button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabReviews">Мои отзывы</button></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabApps">
+                    {% if not apps %}
+                    <div class="alert alert-info">У вас пока нет заявок. <a href="{{ url_for('application_form') }}">Оформить заявку</a></div>
+                    {% else %}
+                    {% for app in apps %}
+                    <div class="card shadow-sm border-0 mb-3 app-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="fw-bold mb-1">{{ app['course_type'] }}</h6>
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar"></i> {{ app['start_date'][:10] }}
+                                        &nbsp;|&nbsp; <i class="bi bi-wallet2"></i> {{ app['payment_method'] }}
+                                    </small>
+                                </div>
+                                <span class="badge bg-{{ 'warning' if app['status'] == 'Новая' else ('info' if app['status'] == 'Идет обучение' else 'success') }} fs-6">
+                                    {{ app['status'] }}
+                                </span>
+                            </div>
+                            <small class="text-muted d-block mt-2">Создана: {{ app['created_at'][:10] }}</small>
+                            {% if app['status'] in ['Идет обучение', 'Обучение завершено'] and app['id'] not in reviewed_ids %}
+                            <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#reviewModal{{ app['id'] }}">
+                                <i class="bi bi-star"></i> Оставить отзыв
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="tabReviews">
+                    {% if not reviews %}
+                    <div class="alert alert-info">Вы ещё не оставляли отзывы.</div>
+                    {% else %}
+                    {% for r in reviews %}
+                    <div class="card shadow-sm border-0 mb-3">
+                        <div class="card-body">
+                            <h6>{{ r['course_type'] }}</h6>
+                            <p class="mb-1">{{ r['text'] }}</p>
+                            <small class="text-muted">{{ r['created_at'][:10] }}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for app in apps %}
+{% if app['status'] in ['Идет обучение', 'Обучение завершено'] and app['id'] not in reviewed_ids %}
+<div class="modal fade" id="reviewModal{{ app['id'] }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Отзыв о курсе</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="app_id" value="{{ app['id'] }}">
+                    <p class="text-muted">Курс: <strong>{{ app['course_type'] }}</strong></p>
+                    <textarea name="review_text" class="form-control" rows="4" placeholder="Напишите ваш отзыв..." required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

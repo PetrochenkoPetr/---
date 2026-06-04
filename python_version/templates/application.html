@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Новая заявка — Учусь.РФ{% endblock %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('profile') }}"><i class="bi bi-mortarboard-fill"></i> Учусь.РФ</a>
+        <div class="d-flex">
+            <a href="{{ url_for('profile') }}" class="btn btn-outline-light btn-sm">Личный кабинет</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 p-4">
+                <h3 class="fw-bold text-center mb-3"><i class="bi bi-file-earmark-plus"></i> Оформление заявки</h3>
+                {% if success %}
+                <div class="alert alert-success">{{ success }}</div>
+                {% endif %}
+                {% if errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                </div>
+                {% endif %}
+                <form method="post" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Вид курса</label>
+                        <select name="course_type" class="form-select" required>
+                            <option value="">— Выберите курс —</option>
+                            {% for ct in course_types %}
+                            <option value="{{ ct }}">{{ ct }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Предпочтительная дата начала</label>
+                        <input type="text" name="start_date" id="startDate" class="form-control" placeholder="ДД.ММ.ГГГГ" maxlength="10" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Способ оплаты</label>
+                        <select name="payment_method" class="form-select" required>
+                            <option value="">— Выберите способ —</option>
+                            {% for pm in payment_methods %}
+                            <option value="{{ pm }}">{{ pm }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Вход — Учусь.РФ{% endblock %}
+{% block content %}
+<div class="container-fluid min-vh-100 d-flex p-0">
+    <div class="row g-0 w-100">
+        <div class="col-lg-7 d-none d-lg-flex align-items-center justify-content-center bg-primary position-relative overflow-hidden">
+            <div class="text-center text-white p-5 position-relative z-1">
+                <i class="bi bi-mortarboard-fill display-1 mb-3"></i>
+                <h2 class="fw-bold display-6">Учусь.РФ</h2>
+                <p class="lead opacity-75">Портал дистанционного обучения</p>
+            </div>
+        </div>
+        <div class="col-lg-5 d-flex align-items-center justify-content-center bg-white p-4">
+            <div class="w-100" style="max-width:400px;">
+                <div class="text-center mb-4 d-lg-none">
+                    <i class="bi bi-mortarboard-fill display-4 text-primary"></i>
+                    <h3 class="fw-bold">Учусь.РФ</h3>
+                </div>
+                <h4 class="fw-bold mb-1">Добро пожаловать</h4>
+                <p class="text-muted mb-4">Войдите в свой аккаунт</p>
+                {% if flash_msg %}
+                <div class="alert alert-success alert-dismissible fade show">{{ flash_msg }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endif %}
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <form method="post" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Логин</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" name="login" class="form-control" placeholder="Введите логин" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" class="form-control" placeholder="Введите пароль" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2"><i class="bi bi-box-arrow-in-right"></i> Войти</button>
+                </form>
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('register') }}">Ещё не зарегистрированы? Регистрация</a>
+                </div>
+                <div class="text-center mt-2">
+                    <a href="{{ url_for('index') }}" class="text-muted small">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
